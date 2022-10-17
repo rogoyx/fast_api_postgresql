@@ -97,9 +97,5 @@ def read_id(
         )
     except:
         return templates.TemplateResponse(
-            "error.html",
-            {"request": request,
-             "patient_id": patient_id
-            }
+            "error.html", {"request": request, "patient_id": patient_id}
         )
-        
