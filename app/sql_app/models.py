@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Float, MetaData, String, Table
 
-metadata_obj = MetaData()
 
 signatures = Table(
     'signatures',
-    metadata_obj,
+    MetaData(),
     Column('patient_id', String, primary_key=True, index=True),
     Column('mhci', Float),
     Column('mhcii', Float),

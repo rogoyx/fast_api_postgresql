@@ -7,13 +7,11 @@ from sql_app.database import get_db
 from sql_app.models import signatures
 
 router = APIRouter()
-
-
 templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/", response_class=HTMLResponse)
-def welcome(request: Request):
+def welcome(request: Request) -> templates.TemplateResponse:
     return templates.TemplateResponse(
         "welcome.html",
         {"request": request}
@@ -24,7 +22,7 @@ def read_id(
     request: Request,
     patient_id: str,
     db: Session = Depends(get_db)
-):
+) -> templates.TemplateResponse:
     q_result = db.query(
         signatures.c.mhci,
         signatures.c.mhcii,
@@ -95,7 +93,7 @@ def read_id(
                 "emt_signature": result["emt_signature"]
             }
         )
-    except:
+    except Exception:
         return templates.TemplateResponse(
             "error.html", {"request": request, "patient_id": patient_id}
         )
