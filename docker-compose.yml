@@ -1,0 +1,20 @@
+version: "1.1"
+services:
+  dbserver:
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: patients
+    build:
+      dockerfile: dbserver.dockerfile
+
+  backend:
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 80"
+    depends_on:
+      - dbserver
+    environment:
+      PYTHONPATH: /app
+    ports:
+      - 80:80
+    build:
+      dockerfile: backend.dockerfile
